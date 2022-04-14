@@ -12,6 +12,7 @@ import logging
 from logging import Formatter, FileHandler
 from flask_wtf import Form
 from forms import *
+from os import environ
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -22,6 +23,10 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 # TODO: connect to a local postgresql database
+SQL_USER = environ.get('PSQL_USER')
+SQL_PASSWORD = environ.get('PSQL_PASSWORD')
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg2://{SQL_USER}:{SQL_PASSWORD}@localhost/fyuur'
+
 
 #----------------------------------------------------------------------------#
 # Models.
